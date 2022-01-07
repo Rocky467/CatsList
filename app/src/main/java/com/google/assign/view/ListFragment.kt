@@ -49,6 +49,8 @@ class ListFragment : BaseFragment(), ConnectivityReceiver.ConnectivityReceiverLi
                     setupRecyclerView()
                     setData()
                 }
+            } else {
+                context?.toast("Internet disconnected!")
             }
         }
     }
