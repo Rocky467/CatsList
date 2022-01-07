@@ -18,7 +18,6 @@ import com.google.assign.view.ListFragmentDirections
 
 class ListAdapter(var ctx: Context) : PagingDataAdapter<User, ListAdapter.UserViewHolder>(USER_COMPARATOR) {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
         return UserViewHolder(view)
