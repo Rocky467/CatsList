@@ -11,7 +11,7 @@
 
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.google.assign.ui.DetailFragment"
+        android:name="com.google.assign.ui.details.DetailFragment"
         android:label="User Details" />
 
 </navigation>

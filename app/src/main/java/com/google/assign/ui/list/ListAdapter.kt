@@ -33,11 +33,6 @@ class ListAdapter(private val userInterface: UserInterface) :
         private val userInterface: UserInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val glide: RequestManager = Glide.with(binding.root.context)
-        private val requestOptions = RequestOptions()
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .transform(CenterCrop())
-
         fun bindData(user: User) {
             binding.apply {
                 this.user = user
@@ -47,7 +42,10 @@ class ListAdapter(private val userInterface: UserInterface) :
                 userInterface.userClick(user)
             }
 
-            glide.load(user.avatar).apply(requestOptions).into(binding.image)
+            Glide.with(binding.root.context)
+                .load(user.avatar)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.image)
         }
 
     }

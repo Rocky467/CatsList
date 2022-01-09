@@ -46,7 +46,6 @@ class ListFragment : BaseFragment(), UserInterface {
         viewModel = ViewModelProvider(this, ListViewModelFactory(ApiService.getApiService())).get(
             ListViewModel::class.java
         )
-
         setupRecyclerView()
         observers()
     }
@@ -55,11 +54,16 @@ class ListFragment : BaseFragment(), UserInterface {
     private fun setupRecyclerView() {
         listAdapter = ListAdapter(this)
         binding.recyclerView.adapter = listAdapter
+
         binding.swipeRefresh.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
                 observers()
                 binding.swipeRefresh.isRefreshing = false
             }, 2000)
+        }
+
+        listAdapter.addLoadStateListener { loadState ->
+            binding.progressView.isVisible = loadState.source.refresh is LoadState.Loading
         }
     }
 
@@ -71,10 +75,6 @@ class ListFragment : BaseFragment(), UserInterface {
                 usersList.observe(viewLifecycleOwner, {
                     listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
                 })
-            }
-
-            listAdapter.addLoadStateListener { loadState ->
-                binding.progressView.isVisible = loadState.source.refresh is LoadState.Loading
             }
         }
     }

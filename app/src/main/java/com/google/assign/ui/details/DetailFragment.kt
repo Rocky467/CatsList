@@ -1,4 +1,4 @@
-package com.google.assign.ui
+package com.google.assign.ui.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.assign.databinding.DetailFragmentBinding
+import com.google.assign.ui.BaseFragment
 import com.google.assign.viewModel.SharedViewModel
 
 class DetailFragment : BaseFragment() {
