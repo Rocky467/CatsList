@@ -1,12 +1,11 @@
-package com.google.assign.adapter
+package com.google.assign.network
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.google.assign.network.ApiService
 import com.google.assign.model.User
 import com.google.assign.utils.log
 
-class PagingAdapter(private val apiService: ApiService) : PagingSource<Int, User>() {
+class RemoteDataSource(private val apiService: ApiService) : PagingSource<Int, User>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
 

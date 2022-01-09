@@ -1,4 +1,4 @@
-package com.google.scogoassign
+package com.google.assign
 
 import org.junit.Assert.assertEquals
 import org.junit.Test

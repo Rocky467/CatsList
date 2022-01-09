@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.navArgs
 import com.google.assign.databinding.DetailFragmentBinding
 import com.google.assign.viewModel.SharedViewModel
 
@@ -25,7 +23,6 @@ class DetailFragment : BaseFragment() {
             lifecycleOwner = this@DetailFragment
             user = sharedViewModel.user
         }
-
         return binding.root
     }
 

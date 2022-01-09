@@ -1,6 +1,8 @@
 package com.google.assign.ui.list
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.assign.R
-import com.google.assign.network.ApiService
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
+import com.google.assign.network.ApiService
 import com.google.assign.ui.BaseFragment
 import com.google.assign.ui.ListViewModel
 import com.google.assign.viewModel.ListViewModelFactory
@@ -53,6 +55,12 @@ class ListFragment : BaseFragment(), UserInterface {
     private fun setupRecyclerView() {
         listAdapter = ListAdapter(this)
         binding.recyclerView.adapter = listAdapter
+        binding.swipeRefresh.setOnRefreshListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                observers()
+                binding.swipeRefresh.isRefreshing = false
+            }, 2000)
+        }
     }
 
 
