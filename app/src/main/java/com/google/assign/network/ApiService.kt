@@ -1,4 +1,4 @@
-package com.google.assign.api
+package com.google.assign.network
 
 import com.google.assign.model.UserData
 import com.google.assign.utils.BASE_URL
@@ -10,8 +10,8 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("random_user?size=30")
-    suspend fun getUsers(): Response<UserData>
+    @GET("random_user")
+    suspend fun getUsers(@Query("size") size:Int): Response<UserData>
 
     companion object {
 

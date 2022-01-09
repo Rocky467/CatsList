@@ -1,34 +1,32 @@
-package com.google.assign.view
+package com.google.assign.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.navArgs
 import com.google.assign.databinding.DetailFragmentBinding
+import com.google.assign.viewModel.SharedViewModel
 
-class DetailFragment : Fragment() {
-
-    val args: DetailFragmentArgs by navArgs()
+class DetailFragment : BaseFragment() {
 
     private lateinit var binding: DetailFragmentBinding
+
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DetailFragmentBinding.inflate(inflater, container, false)
+        binding = DetailFragmentBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@DetailFragment
+            user = sharedViewModel.user
+        }
+
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        val data = args.data
-        binding.textId.text = data?.first_name
-        binding.textAddress.text = data?.last_name
     }
 
 }

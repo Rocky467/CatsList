@@ -1,6 +1,9 @@
-package com.google.assign.view
+package com.google.assign.ui
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,5 +26,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         job.cancel()
     }
 
+    fun toast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
 
 }

@@ -1,0 +1,71 @@
+package com.google.assign.ui.list
+
+import android.annotation.SuppressLint
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.RequestManager
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.request.RequestOptions
+import com.google.assign.databinding.ItemLayoutBinding
+import com.google.assign.model.User
+
+class ListAdapter(private val userInterface: UserInterface) :
+    PagingDataAdapter<User, RecyclerView.ViewHolder>(DiffUtil) {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return UserViewHolder(binding, userInterface)
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        getItem(position)?.let {
+            if (holder is UserViewHolder) holder.bindData(it)
+        }
+    }
+
+    class UserViewHolder(
+        private val binding: ItemLayoutBinding,
+        private val userInterface: UserInterface
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        private val glide: RequestManager = Glide.with(binding.root.context)
+        private val requestOptions = RequestOptions()
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .transform(CenterCrop())
+
+        fun bindData(user: User) {
+            binding.apply {
+                this.user = user
+            }
+
+            binding.item.setOnClickListener {
+                userInterface.userClick(user)
+            }
+
+            glide.load(user.avatar).apply(requestOptions).into(binding.image)
+        }
+
+    }
+
+}
+
+
+interface UserInterface {
+    fun userClick(user: User)
+}
+
+
+val DiffUtil = object : DiffUtil.ItemCallback<User>() {
+    override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
+        oldItem.first_name == newItem.first_name
+
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
+        newItem == oldItem
+}
+

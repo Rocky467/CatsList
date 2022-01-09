@@ -1,4 +1,4 @@
-package com.google.assign.view
+package com.google.assign
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

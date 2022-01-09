@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/listFragment">
+
+    <fragment
+        android:id="@+id/listFragment"
+        android:name="com.google.assign.ui.list.ListFragment"
+        android:label="Users List" />
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.google.assign.ui.DetailFragment"
+        android:label="User Details" />
+
+</navigation>
