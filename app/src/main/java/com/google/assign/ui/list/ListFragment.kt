@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -17,19 +16,21 @@ import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.google.assign.R
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
-import com.google.assign.network.ApiService
 import com.google.assign.ui.BaseFragment
 import com.google.assign.ui.ListViewModel
-import com.google.assign.viewModel.ListViewModelFactory
 import com.google.assign.viewModel.SharedViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class ListFragment : BaseFragment(), UserInterface {
 
-    private lateinit var viewModel: ListViewModel
-    private lateinit var listAdapter: ListAdapter
     private lateinit var binding: ListFragmentBinding
+    private lateinit var listAdapter: ListAdapter
     private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val viewModel: ListViewModel by lazy {
+        getViewModel()
+    }
 
 
     override fun onCreateView(
@@ -44,10 +45,6 @@ class ListFragment : BaseFragment(), UserInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(
-            this, ListViewModelFactory(ApiService.getApiService())
-        )[ListViewModel::class.java]
 
         if (isConnected()) {
             setupRecyclerView()
@@ -93,9 +90,9 @@ class ListFragment : BaseFragment(), UserInterface {
         with(viewModel) {
 
             lifecycleScope.launch {
-                usersList.observe(viewLifecycleOwner, {
-                    listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-                })
+                users.collectLatest {
+                    listAdapter.submitData(it)
+                } //for liveData see(1)
             }
         }
     }
@@ -107,3 +104,13 @@ class ListFragment : BaseFragment(), UserInterface {
     }
 
 }
+
+/*
+
+(1)
+users.observe(viewLifecycleOwner, {
+    listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
+})
+
+
+*/
