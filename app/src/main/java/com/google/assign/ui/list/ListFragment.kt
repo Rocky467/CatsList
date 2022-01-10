@@ -13,6 +13,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.google.assign.R
 import com.google.assign.databinding.ListFragmentBinding
@@ -45,11 +48,30 @@ class ListFragment : BaseFragment(), UserInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, ListViewModelFactory(ApiService.getApiService()))[ListViewModel::class.java]
-        setupRecyclerView()
-        observers()
+        viewModel = ViewModelProvider(
+            this,
+            ListViewModelFactory(ApiService.getApiService())
+        )[ListViewModel::class.java]
+
+        if (isConnected()) {
+            setupRecyclerView()
+            observers()
+        } else {
+            alertDialog(
+                getString(R.string.no_internet),
+                getString(R.string.no_internet_try),
+                { okClick() },
+                { cancelClick() })
+        }
     }
 
+    private fun okClick() {
+        toast("ok clicked")
+    }
+
+    private fun cancelClick() {
+        activity?.finish()
+    }
 
     private fun setupRecyclerView() {
         listAdapter = ListAdapter(this)
