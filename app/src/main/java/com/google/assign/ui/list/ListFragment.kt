@@ -77,11 +77,8 @@ class ListFragment : BaseFragment(), UserInterface {
             }, 2000)
         }
 
-        val loader = binding.spinKit as ProgressBar
-        loader.indeterminateDrawable = ThreeBounce()
-
         listAdapter.addLoadStateListener { loadState ->
-            loader.isVisible = loadState.source.refresh is LoadState.Loading
+            binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
         }
     }
 

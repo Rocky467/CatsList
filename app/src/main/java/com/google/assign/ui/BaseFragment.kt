@@ -3,7 +3,6 @@ package com.google.assign.ui
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.afollestad.materialdialogs.LayoutMode

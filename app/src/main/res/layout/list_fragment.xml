@@ -21,7 +21,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
-        android:id="@+id/spin_kit"
+        android:id="@+id/loader"
         style="@style/SpinKitView.Large.ThreeBounce"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
