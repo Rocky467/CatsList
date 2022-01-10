@@ -6,12 +6,14 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
+import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.google.assign.R
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
@@ -43,9 +45,7 @@ class ListFragment : BaseFragment(), UserInterface {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this, ListViewModelFactory(ApiService.getApiService())).get(
-            ListViewModel::class.java
-        )
+        viewModel = ViewModelProvider(this, ListViewModelFactory(ApiService.getApiService()))[ListViewModel::class.java]
         setupRecyclerView()
         observers()
     }
@@ -62,8 +62,11 @@ class ListFragment : BaseFragment(), UserInterface {
             }, 2000)
         }
 
+        val loader = binding.spinKit as ProgressBar
+        loader.indeterminateDrawable = ThreeBounce()
+
         listAdapter.addLoadStateListener { loadState ->
-            binding.progressView.isVisible = loadState.source.refresh is LoadState.Loading
+            loader.isVisible = loadState.source.refresh is LoadState.Loading
         }
     }
 
