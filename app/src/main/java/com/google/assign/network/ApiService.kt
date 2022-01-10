@@ -11,16 +11,14 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET("random_user")
-    suspend fun getUsers(@Query("size") size:Int): Response<UserData>
+    suspend fun getUsers(@Query("size") size: Int): Response<UserData>
 
     companion object {
-
         fun getApiService(): ApiService = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)
     }
-
 
 }
