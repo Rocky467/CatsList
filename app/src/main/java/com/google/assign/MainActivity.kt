@@ -17,8 +17,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
@@ -33,3 +32,11 @@ class MainActivity : AppCompatActivity() {
 
 
 }
+
+/*
+* DI
+* Mvvm - LiveData - Repo
+* Coroutine - Flow
+* Data binding, View binding
+*
+*/

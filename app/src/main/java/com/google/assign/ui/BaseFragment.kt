@@ -30,7 +30,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         job.cancel()
     }
 
-    fun toast(message: String) {
+    fun showToast(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
     }
 
