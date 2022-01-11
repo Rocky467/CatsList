@@ -29,12 +29,4 @@ class DetailFragment : BaseFragment() {
         return binding.root
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Glide.with(requireContext()).load(sharedViewModel.user.avatar)
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
-            .into(binding.image)
-    }
-
 }

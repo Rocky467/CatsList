@@ -35,10 +35,6 @@ class ListAdapter(private val userInterface: UserInterface) :
             binding.item.setOnClickListener {
                 userInterface.userClick(user)
             }
-
-            Glide.with(binding.root.context).load(user.avatar)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.image)
         }
 
     }
