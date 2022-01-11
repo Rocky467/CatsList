@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.assign.databinding.DetailFragmentBinding
 import com.google.assign.ui.BaseFragment
 import com.google.assign.viewModel.SharedViewModel
@@ -25,6 +27,14 @@ class DetailFragment : BaseFragment() {
             user = sharedViewModel.user
         }
         return binding.root
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Glide.with(requireContext()).load(sharedViewModel.user.avatar)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(binding.image)
     }
 
 }

@@ -6,13 +6,11 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
-import com.github.ybq.android.spinkit.style.ThreeBounce
 import com.google.assign.R
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
@@ -59,7 +57,8 @@ class ListFragment : BaseFragment(), UserInterface {
     }
 
     private fun okClick() {
-        toast("ok clicked")
+        setupRecyclerView()
+        observers()
     }
 
     private fun cancelClick() {
@@ -74,7 +73,7 @@ class ListFragment : BaseFragment(), UserInterface {
             Handler(Looper.getMainLooper()).postDelayed({
                 observers()
                 binding.swipeRefresh.isRefreshing = false
-            }, 2000)
+            }, 1500)
         }
 
         listAdapter.addLoadStateListener { loadState ->
