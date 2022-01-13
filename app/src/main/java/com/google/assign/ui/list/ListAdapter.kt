@@ -30,6 +30,7 @@ class ListAdapter(private val userInterface: UserInterface) :
         fun bind(user: User) {
             binding.apply {
                 this.user = user
+                pos.text = (absoluteAdapterPosition + 1).toString()
             }
 
             binding.item.setOnClickListener {
@@ -49,9 +50,8 @@ interface UserInterface {
 
 val DiffUtil = object : DiffUtil.ItemCallback<User>() {
     override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
-        oldItem.first_name == newItem.first_name
+        oldItem.firstName == newItem.firstName
 
     override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
         newItem == oldItem
 }
-

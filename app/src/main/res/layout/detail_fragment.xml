@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@{user.first_name}"
+                    android:text="@{user.firstName}"
                     tools:text="FirstName" />
 
                 <TextView
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:gravity="center"
-                    android:text="@{user.last_name}"
+                    android:text="@{user.lastName}"
                     tools:text="Last Name" />
 
             </LinearLayout>

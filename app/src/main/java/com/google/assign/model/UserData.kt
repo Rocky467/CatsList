@@ -1,15 +1,23 @@
 package com.google.assign.model
 
-class UserData: ArrayList<User>()
+import com.google.gson.annotations.SerializedName
+
+class UserData : ArrayList<User>()
 
 data class User(
+    @SerializedName("address")
     val address: Address = Address(),
+    @SerializedName("avatar")
     val avatar: String = "",
-    val first_name: String = "",
-    val last_name: String = "",
-    val phone_number: String = ""
+    @SerializedName("first_name")
+    val firstName: String = "",
+    @SerializedName("last_name")
+    val lastName: String = "",
+    @SerializedName("phone_number")
+    val phoneNumber: String = ""
 )
 
 data class Address(
+    @SerializedName("city")
     val city: String = "",
 )
