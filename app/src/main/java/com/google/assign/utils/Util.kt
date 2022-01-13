@@ -23,6 +23,7 @@ fun loadUrl(view: ImageView, url: String) {
 fun ImageView.load(url: String) {
     Glide.with(context)
         .load(url)
+        .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
         .into(this)
 }

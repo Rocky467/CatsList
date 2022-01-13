@@ -79,6 +79,12 @@ class ListFragment : BaseFragment(), UserInterface {
         listAdapter.addLoadStateListener { loadState ->
             binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
         }
+
+        binding.recyclerView.adapter = listAdapter.withLoadStateHeaderAndFooter(
+            header = ListLoadStateAdapter(listAdapter),
+            footer = ListLoadStateAdapter(listAdapter)
+        )
+
     }
 
 
