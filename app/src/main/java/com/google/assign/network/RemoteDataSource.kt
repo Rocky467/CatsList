@@ -11,7 +11,7 @@ class RemoteDataSource(private val apiService: ApiService) : PagingSource<Int, U
 
         return try {
 
-            val response = apiService.getUsers(30).body() ?: emptyList()
+            val response = apiService.getUsers(20).body() ?: emptyList()
             log("$response")
 
             val page = params.key ?: 1
@@ -19,7 +19,7 @@ class RemoteDataSource(private val apiService: ApiService) : PagingSource<Int, U
             LoadResult.Page(
                 data = response,
                 prevKey = if (page == 1) null else page - 1,
-                nextKey = page + 1
+                nextKey = if (response.isEmpty()) null else page + 1
             )
         } catch (e: Exception) {
             LoadResult.Error(e)
