@@ -73,7 +73,7 @@ class ListFragment : BaseFragment(), UserInterface {
             Handler(Looper.getMainLooper()).postDelayed({
                 observers()
                 binding.swipeRefresh.isRefreshing = false
-            }, 1500)
+            }, 1000)
         }
 
         listAdapter.addLoadStateListener { loadState ->
