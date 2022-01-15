@@ -28,14 +28,6 @@ val appModule = module {
         provideOkHttpClient()
     }
 
-    single {
-        provideRequestOptions()
-    }
-
-    single {
-        provideGlideInstance(get(), get())
-    }
-
 }
 
 val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -58,12 +50,3 @@ fun provideRetrofitInstance(client: OkHttpClient, gson: Gson): Retrofit {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 }
-
-fun provideRequestOptions() = RequestOptions()
-    .centerCrop()
-    .diskCacheStrategy(DiskCacheStrategy.ALL)
-
-fun provideGlideInstance(
-    application: Application,
-    requestOptions: RequestOptions
-): RequestManager = Glide.with(application).setDefaultRequestOptions(requestOptions)
