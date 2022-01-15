@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.assign.databinding.ItemLayoutBinding
 import com.google.assign.model.User
 
-class ListAdapter(private val userInterface: UserInterface) :
+class ListAdapter(private val adapterInterface: AdapterInterface) :
     PagingDataAdapter<User, ListAdapter.UserViewHolder>(DiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserViewHolder(binding, userInterface)
+        return UserViewHolder(binding, adapterInterface)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
@@ -22,17 +22,16 @@ class ListAdapter(private val userInterface: UserInterface) :
 
     class UserViewHolder(
         private val binding: ItemLayoutBinding,
-        private val userInterface: UserInterface
+        private val adapterInterface: AdapterInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(user: User) {
             binding.apply {
                 this.user = user
                 pos.text = (absoluteAdapterPosition + 1).toString()
-            }
-
-            binding.item.setOnClickListener {
-                userInterface.userClick(user)
+                itemView.setOnClickListener {
+                    adapterInterface.userClick(user)
+                }
             }
         }
 
@@ -41,7 +40,7 @@ class ListAdapter(private val userInterface: UserInterface) :
 }
 
 
-interface UserInterface {
+interface AdapterInterface {
     fun userClick(user: User)
 }
 
