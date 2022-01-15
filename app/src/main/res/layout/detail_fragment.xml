@@ -32,7 +32,8 @@
                 app:civ_border_width="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@tools:sample/backgrounds/scenic" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,8 +41,7 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/image"
-                tools:context=".ui.details.DetailFragment">
+                app:layout_constraintTop_toBottomOf="@id/image">
 
                 <TextView
                     android:id="@+id/textId"

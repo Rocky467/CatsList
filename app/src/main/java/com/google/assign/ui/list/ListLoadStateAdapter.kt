@@ -17,8 +17,7 @@ class ListLoadStateAdapter(private val adapter: ListAdapter) :
         parent: ViewGroup,
         loadState: LoadState
     ): NetworkStateViewHolder {
-        val binding =
-            NetworkStateItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = NetworkStateItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NetworkStateViewHolder(binding, adapter)
     }
 

@@ -59,8 +59,9 @@ fun provideRetrofitInstance(client: OkHttpClient, gson: Gson): Retrofit {
         .build()
 }
 
-fun provideRequestOptions(): RequestOptions =
-    RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
+fun provideRequestOptions() = RequestOptions()
+    .centerCrop()
+    .diskCacheStrategy(DiskCacheStrategy.ALL)
 
 fun provideGlideInstance(
     application: Application,

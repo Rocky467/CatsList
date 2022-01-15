@@ -77,12 +77,13 @@ class ListFragment : BaseFragment(), UserInterface {
         }
 
         listAdapter.addLoadStateListener { loadState ->
+            // .mediator or .source decide here
             binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
+            // remove below line for db and mediator
             binding.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
         }
 
-        binding.recyclerView.adapter = listAdapter.withLoadStateHeaderAndFooter(
-            header = ListLoadStateAdapter(listAdapter),
+        binding.recyclerView.adapter = listAdapter.withLoadStateFooter(
             footer = ListLoadStateAdapter(listAdapter)
         )
 
