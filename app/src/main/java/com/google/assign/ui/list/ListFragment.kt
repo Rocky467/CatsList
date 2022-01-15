@@ -71,7 +71,7 @@ class ListFragment : BaseFragment(), UserInterface {
 
         binding.swipeRefresh.setOnRefreshListener {
             Handler(Looper.getMainLooper()).postDelayed({
-                observers()
+                listAdapter.refresh()
                 binding.swipeRefresh.isRefreshing = false
             }, 1000)
         }
