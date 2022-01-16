@@ -7,28 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import com.google.assign.R
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
 import com.google.assign.ui.BaseFragment
-import com.google.assign.ui.ListViewModel
-import com.google.assign.viewModel.SharedViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class ListFragment : BaseFragment(), AdapterInterface {
 
     private lateinit var binding: ListFragmentBinding
     private lateinit var listAdapter: ListAdapter
-    private val sharedViewModel: SharedViewModel by activityViewModels()
-    private val viewModel: ListViewModel by lazy {
-        getViewModel()
-    }
 
 
     override fun onCreateView(
@@ -91,7 +82,7 @@ class ListFragment : BaseFragment(), AdapterInterface {
 
 
     private fun observers() {
-        with(viewModel) {
+        with(listViewModel) {
 
             lifecycleScope.launch {
                 users.collectLatest {
@@ -104,7 +95,7 @@ class ListFragment : BaseFragment(), AdapterInterface {
 
     override fun userClick(user: User) {
         sharedViewModel.user = user
-        findNavController().navigate(R.id.detailFragment)
+        navigateTo(R.id.detailFragment)
     }
 
 }
