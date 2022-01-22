@@ -1,4 +1,4 @@
-package com.google.assign.viewModel
+package com.google.assign.utils
 
 import androidx.lifecycle.ViewModel
 import com.google.assign.model.User

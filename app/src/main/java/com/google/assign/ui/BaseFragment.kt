@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
-import com.google.assign.viewModel.SharedViewModel
+import com.google.assign.utils.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -45,30 +45,26 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     }
 
     //for both click
-    fun alertDialog(title: String, msg: String, okClick: () -> Unit, cancelClick: () -> Unit) {
+    fun alertDialog(
+        title: String,
+        msg: String,
+        okClick: () -> Unit,
+        cancelClick: (() -> Unit)? = null
+    ) {
         MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
             title(text = title)
             message(text = msg)
             cornerRadius(10f)
             cancelable(false)
             positiveButton(text = "Okay") { okClick() }
-            negativeButton(text = "Cancel") { cancelClick() }
+            negativeButton(text = "Cancel") { cancelClick?.invoke() }
         }
     }
 
-    //for ok click
-    fun alertDialog(title: String, msg: String, okClick: () -> Unit) {
-        MaterialDialog(requireContext(), BottomSheet(LayoutMode.WRAP_CONTENT)).show {
-            title(text = title)
-            message(text = msg)
-            cornerRadius(10f)
-            cancelable(false)
-            positiveButton(text = "Okay") { okClick() }
-        }
-    }
 
     fun isConnected(): Boolean {
-        val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
