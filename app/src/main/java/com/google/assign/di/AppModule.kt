@@ -1,10 +1,5 @@
 package com.google.assign.di
 
-import android.app.Application
-import com.bumptech.glide.Glide
-import com.bumptech.glide.RequestManager
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
 import com.google.assign.utils.BASE_URL
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -13,7 +8,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 val appModule = module {
@@ -29,6 +23,7 @@ val appModule = module {
     }
 
 }
+
 
 val loggingInterceptor = HttpLoggingInterceptor().apply {
     level = HttpLoggingInterceptor.Level.BODY
