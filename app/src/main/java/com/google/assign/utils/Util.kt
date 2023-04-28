@@ -1,5 +1,7 @@
 package com.google.assign.utils
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -7,8 +9,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.assign.R
 
-fun log(tag: String, msg: Any) {
+fun log(tag: String, msg: Any?) {
     Log.d(tag, "$msg")
+}
+
+fun delay(sec: Long, function: () -> Unit) {
+    Handler(Looper.getMainLooper()).postDelayed({
+        function()
+    }, sec * 1000)
 }
 
 @BindingAdapter("android:loadUrl")

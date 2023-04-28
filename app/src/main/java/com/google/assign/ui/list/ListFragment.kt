@@ -1,8 +1,6 @@
 package com.google.assign.ui.list
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +14,7 @@ import com.google.assign.ui.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ListFragment : BaseFragment(), AdapterInterface {
+class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
 
     private lateinit var binding: ListFragmentBinding
     private lateinit var listAdapter: ListAdapter
@@ -61,10 +59,8 @@ class ListFragment : BaseFragment(), AdapterInterface {
         binding.recyclerView.adapter = listAdapter
 
         binding.swipeRefresh.setOnRefreshListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                listAdapter.refresh()
-                binding.swipeRefresh.isRefreshing = false
-            }, 1000)
+            listAdapter.refresh()
+            binding.swipeRefresh.isRefreshing = false
         }
 
         listAdapter.addLoadStateListener { loadState ->
