@@ -56,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
+                android:fontFamily="monospace"
                 android:text="@{user.lastName}"
                 app:layout_constraintStart_toEndOf="@+id/name1"
                 app:layout_constraintTop_toTopOf="parent"
