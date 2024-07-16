@@ -13,16 +13,17 @@ fun log(tag: String, msg: Any?) {
     Log.d(tag, "$msg")
 }
 
-fun delay(sec: Long, function: () -> Unit) {
+@Suppress("unused")
+fun delays(millis: Long, function: () -> Unit) {
     Handler(Looper.getMainLooper()).postDelayed({
         function()
-    }, sec * 1000)
+    }, millis)
 }
 
 @BindingAdapter("android:loadUrl")
-fun loadUrl(view: ImageView, url: String?) {
-    if (url != null) {
-        view.load(url)
+fun loadUrl(imageView: ImageView, url: String?) {
+    url?.let {
+        imageView.load(it)
     }
 }
 

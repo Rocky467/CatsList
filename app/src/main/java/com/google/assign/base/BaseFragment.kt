@@ -1,4 +1,4 @@
-package com.google.assign.ui
+package com.google.assign.base
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -14,15 +14,13 @@ import com.google.assign.utils.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import org.koin.androidx.viewmodel.ext.android.getViewModel
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment : Fragment(), CoroutineScope {
 
-    private lateinit var job: Job
+    val sharedViewModel: SharedViewModel by activityViewModels()
 
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+    private lateinit var job: Job
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,15 +32,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         job.cancel()
     }
 
-    val sharedViewModel: SharedViewModel by activityViewModels()
-
-    val listViewModel: ListViewModel by lazy {
-        getViewModel()
-    }
-
-    fun showToast(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
-    }
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     //for both click
     fun alertDialog(
@@ -61,9 +52,9 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         }
     }
 
-
     fun isConnected(): Boolean {
-        val cm = requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val cm =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting
     }
@@ -71,4 +62,9 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     fun navigateTo(fragmentId: Int) {
         findNavController().navigate(fragmentId)
     }
+
+    fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+    }
+
 }

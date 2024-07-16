@@ -3,11 +3,9 @@ package com.google.assign
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.assign.databinding.ActivityMainBinding
-
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,16 +18,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment) as NavHostFragment
         navController = navHostFragment.navController
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-
     override fun onSupportNavigateUp(): Boolean {
         return NavigationUI.navigateUp(navController, null)
     }
-
 
 }
 
@@ -38,5 +35,4 @@ class MainActivity : AppCompatActivity() {
 * Mvvm - LiveData - Repo
 * Coroutine - Flow
 * Data binding, View binding
-*
 */

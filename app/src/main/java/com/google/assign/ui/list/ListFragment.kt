@@ -8,17 +8,18 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.google.assign.R
+import com.google.assign.base.BaseFragment
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
-import com.google.assign.ui.BaseFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
 
     private lateinit var binding: ListFragmentBinding
     private lateinit var listAdapter: ListAdapter
-
+    private val listViewModel: ListViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +29,6 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
         binding = ListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,10 +76,8 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
 
     }
 
-
     private fun observers() {
         with(listViewModel) {
-
             lifecycleScope.launch {
                 users.collectLatest {
                     listAdapter.submitData(it)
@@ -87,7 +85,6 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
             }
         }
     }
-
 
     override fun userClick(user: User) {
         sharedViewModel.user = user
@@ -97,11 +94,8 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
 }
 
 /*
-
 (1)
 users.observe(viewLifecycleOwner, {
     listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
 })
-
-
 */

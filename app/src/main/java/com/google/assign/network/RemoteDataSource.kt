@@ -3,6 +3,7 @@ package com.google.assign.network
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.google.assign.model.User
+import com.google.assign.utils.LIST_COUNT
 import com.google.assign.utils.log
 
 class RemoteDataSource(private val apiService: ApiService) : PagingSource<Int, User>() {
@@ -11,7 +12,7 @@ class RemoteDataSource(private val apiService: ApiService) : PagingSource<Int, U
 
         return try {
 
-            val response = apiService.getUsers(20).body() ?: emptyList()
+            val response = apiService.getUsers(LIST_COUNT).body() ?: emptyList()
             log("dataHere", response)
 
             val page = params.key ?: 1

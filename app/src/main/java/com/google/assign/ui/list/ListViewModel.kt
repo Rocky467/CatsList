@@ -1,4 +1,4 @@
-package com.google.assign.ui
+package com.google.assign.ui.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
