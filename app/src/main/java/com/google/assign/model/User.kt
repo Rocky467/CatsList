@@ -3,6 +3,8 @@ package com.google.assign.model
 import com.google.gson.annotations.SerializedName
 
 data class User(
+    @SerializedName("id")
+    val id: Int = 0,
     @SerializedName("address")
     val address: Address = Address(),
     @SerializedName("avatar")
