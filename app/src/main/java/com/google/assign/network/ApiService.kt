@@ -7,8 +7,8 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    companion object{
-        const val USER = "random_user"
+    companion object {
+        private const val USER = "random_user"
     }
 
     @GET(USER)
