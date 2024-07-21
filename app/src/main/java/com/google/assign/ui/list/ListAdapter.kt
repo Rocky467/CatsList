@@ -3,13 +3,13 @@ package com.google.assign.ui.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.assign.databinding.ItemLayoutBinding
 import com.google.assign.model.User
+import com.google.assign.utils.diffUtil
 
 class ListAdapter(private val adapterInterface: AdapterInterface) :
-    PagingDataAdapter<User, ListAdapter.UserViewHolder>(DIFF_CALLBACK) {
+    PagingDataAdapter<User, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,31 +24,19 @@ class ListAdapter(private val adapterInterface: AdapterInterface) :
         private val binding: ItemLayoutBinding,
         private val adapterInterface: AdapterInterface
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(user: User) {
+        fun bind(item: User) {
             binding.apply {
-                this.user = user
-                pos.text = (absoluteAdapterPosition.plus(1)).toString()
+                user = item
+                tvPos.text = (absoluteAdapterPosition.plus(1)).toString()
                 itemView.setOnClickListener {
-                    adapterInterface.userClick(user)
+                    adapterInterface.userClick(item)
                 }
             }
         }
-
     }
 
     interface AdapterInterface {
         fun userClick(user: User)
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<User>() {
-            override fun areItemsTheSame(oldItem: User, newItem: User): Boolean =
-                oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: User, newItem: User): Boolean =
-                newItem == oldItem
-        }
     }
 }
 
