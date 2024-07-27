@@ -8,5 +8,5 @@ val serviceModule = module {
     single { provideService(get()) }
 }
 
-fun provideService(retrofit: Retrofit): ApiService =
+private fun provideService(retrofit: Retrofit): ApiService =
     retrofit.create(ApiService::class.java)

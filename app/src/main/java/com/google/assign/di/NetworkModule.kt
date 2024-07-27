@@ -10,30 +10,23 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 val networkModule = module {
-    single { provideRetrofit(get(), get()) }
-    single { provideConverterFactory() }
+    single { provideRetrofit(get()) }
     single { provideHttpClient() }
 }
 
-fun provideRetrofit(
-    okHttpClient: OkHttpClient,
-    gsonConverterFactory: GsonConverterFactory
-): Retrofit = Retrofit.Builder()
+private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .client(okHttpClient)
-    .addConverterFactory(gsonConverterFactory)
+    .addConverterFactory(GsonConverterFactory.create())
     .build()
 
-fun provideConverterFactory(): GsonConverterFactory =
-    GsonConverterFactory.create()
-
-fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
+private fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
     .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
     .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
     .readTimeout(TIME_OUT, TimeUnit.SECONDS)
     .addNetworkInterceptor(loggingInterceptor)
     .build()
 
-val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
+private val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
     level = HttpLoggingInterceptor.Level.BODY
 }
