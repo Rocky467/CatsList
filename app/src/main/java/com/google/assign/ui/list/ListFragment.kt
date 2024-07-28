@@ -5,20 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.lifecycleScope
 import androidx.paging.LoadState
 import com.google.assign.R
 import com.google.assign.base.BaseFragment
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
+class ListFragment : BaseFragment(), ListPagingDataAdapter.AdapterInterface {
 
     private lateinit var binding: ListFragmentBinding
-    private lateinit var listAdapter: ListAdapter
+    private lateinit var adapter: ListPagingDataAdapter
     private val listViewModel: ListViewModel by viewModel()
 
     override fun onCreateView(
@@ -55,34 +52,29 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
     }
 
     private fun setupRecyclerView() {
-        listAdapter = ListAdapter(this)
-        binding.recyclerView.adapter = listAdapter
+        adapter = ListPagingDataAdapter(this)
+        binding.recyclerView.adapter = adapter
 
         binding.swipeRefresh.setOnRefreshListener {
-            listAdapter.refresh()
+            adapter.refresh()
             binding.swipeRefresh.isRefreshing = false
         }
 
-        listAdapter.addLoadStateListener { loadState ->
+        adapter.addLoadStateListener { loadState ->
             // .mediator or .source decide here
             binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
             // remove below line for db and mediator
             binding.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
         }
 
-        binding.recyclerView.adapter = listAdapter.withLoadStateFooter(
-            footer = ListLoadStateAdapter(listAdapter)
+        binding.recyclerView.adapter = adapter.withLoadStateFooter(
+            footer = ListLoadStateAdapter(adapter)
         )
-
     }
 
     private fun observers() {
-        with(listViewModel) {
-            lifecycleScope.launch {
-                users.collectLatest {
-                    listAdapter.submitData(it)
-                } //for liveData see(1)
-            }
+        listViewModel.users.observe(viewLifecycleOwner) {
+            adapter.submitData(lifecycle, it)
         }
     }
 
@@ -92,10 +84,3 @@ class ListFragment : BaseFragment(), ListAdapter.AdapterInterface {
     }
 
 }
-
-/*
-(1)
-users.observe(viewLifecycleOwner, {
-    listAdapter.submitData(viewLifecycleOwner.lifecycle, it)
-})
-*/

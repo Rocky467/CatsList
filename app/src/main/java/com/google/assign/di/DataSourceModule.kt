@@ -1,8 +1,8 @@
 package com.google.assign.di
 
-import com.google.assign.network.RemoteDataSource
+import com.google.assign.network.UserPagingSource
 import org.koin.dsl.module
 
 val dataSourceModule = module {
-    single {  RemoteDataSource(get()) }
+    single {  UserPagingSource(get()) }
 }
