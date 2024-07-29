@@ -1,11 +1,15 @@
 
-## Architecture
-DI: koin
-Pattern: MVVM
-Network: Retrofit
+Architecture::
+koin
+MVVM
+Retrofit2
+LiveData
 Paging3
+Navigation
 
-## Redundant dependencies for this project
+----------------------------------------------------------------------------
+
+Redundant dependencies for this project::
 
 implementation "io.insert-koin:koin-androidx-fragment:2.2.3"
 implementation "io.insert-koin:koin-androidx-scope:2.2.3"

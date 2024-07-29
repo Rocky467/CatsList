@@ -3,39 +3,51 @@ package com.google.assign.base
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.viewbinding.ViewBinding
 import com.afollestad.materialdialogs.LayoutMode
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.google.assign.utils.SharedViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
-abstract class BaseFragment : Fragment(), CoroutineScope {
+abstract class BaseFragment<VB : ViewBinding>(
+    private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB
+) : Fragment() {
+
+    private var _binding: VB? = null
+    val binding: VB get() = _binding!!
 
     val sharedViewModel: SharedViewModel by activityViewModels()
 
-    private lateinit var job: Job
+    open fun onCreateView() {}
+    open fun onViewCreated() {}
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        job = Job()
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = inflate.invoke(inflater, container, false)
+        onCreateView()
+        return binding.root
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        job.cancel()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onViewCreated()
     }
 
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-    //for both click
     fun alertDialog(
         title: String,
         msg: String,
@@ -52,6 +64,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         }
     }
 
+    @Suppress("DEPRECATION")
     fun isConnected(): Boolean {
         val cm =
             requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager

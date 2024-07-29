@@ -10,9 +10,8 @@ class App : Application() {
 
     private val modules = arrayListOf(
         networkModule,
-        serviceModule,
-        dataSourceModule,
         repositoryModule,
+        serviceModule,
         viewModelModule
     )
 

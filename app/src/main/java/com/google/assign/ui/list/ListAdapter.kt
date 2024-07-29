@@ -8,8 +8,8 @@ import com.google.assign.databinding.ItemLayoutBinding
 import com.google.assign.model.User
 import com.google.assign.utils.diffUtil
 
-class ListPagingDataAdapter(private val adapterInterface: AdapterInterface) :
-    PagingDataAdapter<User, ListPagingDataAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
+class ListAdapter(private val adapterInterface: AdapterInterface) :
+    PagingDataAdapter<User, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)

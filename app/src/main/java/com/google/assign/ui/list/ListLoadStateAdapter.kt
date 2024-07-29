@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.assign.R
 import com.google.assign.databinding.NetworkStateItemBinding
 
-class ListLoadStateAdapter(private val adapter: ListPagingDataAdapter) :
+class ListLoadStateAdapter(private val adapter: ListAdapter) :
     LoadStateAdapter<ListLoadStateAdapter.NetworkStateViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -26,7 +26,7 @@ class ListLoadStateAdapter(private val adapter: ListPagingDataAdapter) :
 
     class NetworkStateViewHolder(
         private val binding: NetworkStateItemBinding,
-        private val adapter: ListPagingDataAdapter
+        private val adapter: ListAdapter
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(loadState: LoadState) {

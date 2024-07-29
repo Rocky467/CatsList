@@ -1,9 +1,5 @@
 package com.google.assign.ui.list
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.paging.LoadState
 import com.google.assign.R
@@ -12,24 +8,13 @@ import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.User
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListFragment : BaseFragment(), ListPagingDataAdapter.AdapterInterface {
+class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::inflate),
+    ListAdapter.AdapterInterface {
 
-    private lateinit var binding: ListFragmentBinding
-    private lateinit var adapter: ListPagingDataAdapter
+    private lateinit var adapter: ListAdapter
     private val listViewModel: ListViewModel by viewModel()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = ListFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onViewCreated() {
         if (isConnected()) {
             setupRecyclerView()
             observers()
@@ -52,7 +37,7 @@ class ListFragment : BaseFragment(), ListPagingDataAdapter.AdapterInterface {
     }
 
     private fun setupRecyclerView() {
-        adapter = ListPagingDataAdapter(this)
+        adapter = ListAdapter(this)
         binding.recyclerView.adapter = adapter
 
         binding.swipeRefresh.setOnRefreshListener {
