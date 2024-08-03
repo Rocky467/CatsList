@@ -58,7 +58,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::infl
     }
 
     private fun observers() {
-        listViewModel.users.observe(viewLifecycleOwner) {
+        listViewModel.userList.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
         }
     }

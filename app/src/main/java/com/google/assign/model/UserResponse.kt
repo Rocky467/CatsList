@@ -2,7 +2,7 @@ package com.google.assign.model
 
 import com.google.gson.annotations.SerializedName
 
-class UserData : ArrayList<User>()
+class UserResponse : ArrayList<User>()
 
 data class User(
     @SerializedName("id")

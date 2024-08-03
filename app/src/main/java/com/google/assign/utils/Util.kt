@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.google.android.material.snackbar.Snackbar
 import com.google.assign.R
 
 fun log(tag: String, msg: Any?) {
@@ -29,8 +31,13 @@ fun ImageView.loadUrl(url: String) = Glide.with(context)
     .diskCacheStrategy(DiskCacheStrategy.ALL)
     .into(this)
 
+fun View.showError(message: String) {
+    Snackbar.make(this, message, Snackbar.LENGTH_LONG)
+        .setAction("Action", null).show()
+}
+
 fun <T : Any> diffUtil(
-    areItemsTheSame: (oldItem: T, newItem: T) -> Boolean
+    areItemsTheSame: (oldItem: T, newItem: T) -> Boolean,
 ): DiffUtil.ItemCallback<T> = object : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
         areItemsTheSame(oldItem, newItem)
