@@ -18,7 +18,7 @@ class ListViewModel(private val repository: Repository) : ViewModel() {
     private val _user = MutableLiveData<Resource<User>>()
     val user: LiveData<Resource<User>> get() = _user
 
-    fun getUser() = viewModelScope.launch {
+    fun getUserDetails() = viewModelScope.launch {
         _user.postValue(Resource.Loading())
         _user.postValue(repository.getUser())
     }

@@ -19,7 +19,7 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(DetailFragmentBinding
     }
 
     override fun onViewCreated() {
-        viewModel.getUser()
+        viewModel.getUserDetails()
         viewModel.user.observe(viewLifecycleOwner) {
             binding.loader.isVisible = false
             when (it) {
