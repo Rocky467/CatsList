@@ -50,7 +50,7 @@ abstract class BaseFragment<VB : ViewBinding>(
         findNavController().navigate(fragmentId)
     }
 
-    fun <T> takeIfSuccess(it: Resource<T>, progressBar: ProgressBar): T? {
+    fun <T> fetchData(it: Resource<T>, progressBar: ProgressBar): T? {
         progressBar.isVisible = false
         when (it) {
             is Resource.Loading -> {

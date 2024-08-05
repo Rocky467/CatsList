@@ -18,8 +18,8 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(DetailFragmentBinding
     override fun onViewCreated() {
         viewModel.getUserDetails()
         viewModel.user.observe(viewLifecycleOwner) {
-            val data = takeIfSuccess(it, binding.loader)
-            log("TAG", data?.avatar)
+            val data = fetchData(it, binding.loader)
+            log("TAG", data)
         }
     }
 
