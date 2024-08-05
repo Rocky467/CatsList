@@ -2,8 +2,6 @@ package com.google.assign.model
 
 import com.google.gson.annotations.SerializedName
 
-class UserResponse : ArrayList<User>()
-
 data class User(
     @SerializedName("id")
     val id: Int = 0,
@@ -16,7 +14,7 @@ data class User(
     @SerializedName("last_name")
     val lastName: String = "",
     @SerializedName("phone_number")
-    val phoneNumber: String = ""
+    val phoneNumber: String = "",
 ) {
     data class Address(
         @SerializedName("city")

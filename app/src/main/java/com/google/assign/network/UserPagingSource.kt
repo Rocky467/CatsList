@@ -3,13 +3,13 @@ package com.google.assign.network
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.google.assign.model.User
-import com.google.assign.utils.LIMIT
+import com.google.assign.utils.Const.PAGE_LIMIT
 
 class UserPagingSource(private val apiService: ApiService) : PagingSource<Int, User>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, User> {
         return try {
-            val response = apiService.getUsers(LIMIT).body() ?: emptyList()
+            val response = apiService.getUsers(PAGE_LIMIT).body() ?: emptyList()
             val page = params.key ?: 1
             LoadResult.Page(
                 data = response,

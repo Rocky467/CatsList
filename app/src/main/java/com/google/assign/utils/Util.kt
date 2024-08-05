@@ -1,48 +1,85 @@
 package com.google.assign.utils
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.afollestad.materialdialogs.LayoutMode
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.bottomsheets.BottomSheet
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import com.google.assign.R
 
-fun log(tag: String, msg: Any?) {
-    Log.d(tag, "$msg")
-}
+object Util {
 
-fun delays(millis: Long, function: () -> Unit) {
-    Handler(Looper.getMainLooper()).postDelayed({
-        function()
-    }, millis)
-}
+    fun log(tag: String, msg: Any?) {
+        Log.d(tag, "$msg")
+    }
 
-@BindingAdapter("loadUrl")
-fun ImageView.loadUrl(url: String) = Glide.with(context)
-    .load(url)
-    .placeholder(R.drawable.default_placeholder)
-    .centerCrop()
-    .diskCacheStrategy(DiskCacheStrategy.ALL)
-    .into(this)
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
 
-fun View.showError(message: String) {
-    Snackbar.make(this, message, Snackbar.LENGTH_LONG)
-        .setAction("Action", null).show()
-}
+    fun View.showError(message: String) {
+        Snackbar.make(this, message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+    }
 
-fun <T : Any> diffUtil(
-    areItemsTheSame: (oldItem: T, newItem: T) -> Boolean,
-): DiffUtil.ItemCallback<T> = object : DiffUtil.ItemCallback<T>() {
-    override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
-        areItemsTheSame(oldItem, newItem)
+    fun delays(millis: Long, function: () -> Unit) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            function()
+        }, millis)
+    }
 
-    @SuppressLint("DiffUtilEquals")
-    override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
-        oldItem == newItem
+    @JvmStatic
+    @BindingAdapter("loadUrl")
+    fun ImageView.loadUrl(url: String) = Glide.with(context)
+        .load(url)
+        .placeholder(R.drawable.default_placeholder)
+        .centerCrop()
+        .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .into(this)
+
+    fun alertDialog(
+        context: Context,
+        title: String,
+        msg: String,
+        okClick: () -> Unit,
+        cancelClick: (() -> Unit)? = null,
+    ) {
+        MaterialDialog(context, BottomSheet(LayoutMode.WRAP_CONTENT)).show {
+            title(text = title)
+            message(text = msg)
+            cornerRadius(10f)
+            cancelable(false)
+            positiveButton(text = "Okay") { okClick() }
+            negativeButton(text = "Cancel") { cancelClick?.invoke() }
+        }
+    }
+
+    @Suppress("DEPRECATION")
+    fun isConnected(context: Context): Boolean {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        return activeNetwork != null && activeNetwork.isConnectedOrConnecting
+    }
+
+    fun <T : Any> diffUtil(
+        areItemsTheSame: (oldItem: T, newItem: T) -> Boolean,
+    ): DiffUtil.ItemCallback<T> = object : DiffUtil.ItemCallback<T>() {
+        override fun areItemsTheSame(oldItem: T, newItem: T): Boolean =
+            areItemsTheSame(oldItem, newItem)
+
+        @SuppressLint("DiffUtilEquals")
+        override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
+            oldItem == newItem
+    }
 }

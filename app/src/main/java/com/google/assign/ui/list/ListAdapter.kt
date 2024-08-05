@@ -6,7 +6,7 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.assign.databinding.ItemLayoutBinding
 import com.google.assign.model.User
-import com.google.assign.utils.diffUtil
+import com.google.assign.utils.Util.diffUtil
 
 class ListAdapter(private val adapterInterface: AdapterInterface) :
     PagingDataAdapter<User, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {

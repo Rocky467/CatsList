@@ -15,25 +15,8 @@ class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::infl
     private val listViewModel: ListViewModel by viewModel()
 
     override fun onViewCreated() {
-        if (isConnected()) {
-            setupRecyclerView()
-            observers()
-        } else {
-            alertDialog(
-                getString(R.string.no_internet),
-                getString(R.string.no_internet_try),
-                { okClick() },
-                { cancelClick() })
-        }
-    }
-
-    private fun okClick() {
         setupRecyclerView()
         observers()
-    }
-
-    private fun cancelClick() {
-        activity?.finish()
     }
 
     private fun setupRecyclerView() {

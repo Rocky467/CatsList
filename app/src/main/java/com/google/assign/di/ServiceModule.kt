@@ -4,9 +4,12 @@ import com.google.assign.network.ApiService
 import org.koin.dsl.module
 import retrofit2.Retrofit
 
-val serviceModule = module {
-    single { provideService(get()) }
-}
+object ServiceModule {
 
-private fun provideService(retrofit: Retrofit): ApiService = retrofit
-    .create(ApiService::class.java)
+    val serviceModule = module {
+        single { provideService(get()) }
+    }
+
+    private fun provideService(retrofit: Retrofit): ApiService = retrofit
+        .create(ApiService::class.java)
+}
