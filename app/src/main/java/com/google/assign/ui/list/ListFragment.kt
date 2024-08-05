@@ -15,29 +15,30 @@ class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::infl
     private val listViewModel: ListViewModel by viewModel()
 
     override fun onViewCreated() {
-        setupRecyclerView()
+        setupViews()
         observers()
     }
 
-    private fun setupRecyclerView() {
+    private fun setupViews() {
         adapter = ListAdapter(this)
-        binding.recyclerView.adapter = adapter
 
-        binding.swipeRefresh.setOnRefreshListener {
-            adapter.refresh()
-            binding.swipeRefresh.isRefreshing = false
+        binding.apply {
+            recyclerView.adapter = adapter
+
+            swipeRefresh.setOnRefreshListener {
+                adapter.refresh()
+                swipeRefresh.isRefreshing = false
+            }
+
+            adapter.addLoadStateListener { loadState ->
+                loader.isVisible = loadState.refresh is LoadState.Loading
+                recyclerView.isVisible = loadState.refresh is LoadState.NotLoading
+            }
+
+            recyclerView.adapter = adapter.withLoadStateFooter(
+                footer = ListLoadStateAdapter(adapter)
+            )
         }
-
-        adapter.addLoadStateListener { loadState ->
-            // .mediator or .source decide here
-            binding.loader.isVisible = loadState.source.refresh is LoadState.Loading
-            // remove below line for db and mediator
-            binding.recyclerView.isVisible = loadState.source.refresh is LoadState.NotLoading
-        }
-
-        binding.recyclerView.adapter = adapter.withLoadStateFooter(
-            footer = ListLoadStateAdapter(adapter)
-        )
     }
 
     private fun observers() {
