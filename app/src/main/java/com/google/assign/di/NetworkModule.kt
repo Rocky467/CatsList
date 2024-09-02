@@ -12,24 +12,23 @@ import java.util.concurrent.TimeUnit
 object NetworkModule {
 
     val networkModule = module {
-        single { provideRetrofit(get()) }
-        single { provideHttpClient() }
+        single { provideRetrofit() }
     }
 
-    private fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
+    private val logger = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
 
-    private fun provideHttpClient(): OkHttpClient = OkHttpClient.Builder()
+    private val httpClient = OkHttpClient.Builder()
         .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
         .readTimeout(TIME_OUT, TimeUnit.SECONDS)
-        .addNetworkInterceptor(loggingInterceptor)
+        .addNetworkInterceptor(logger)
         .build()
 
-    private val loggingInterceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
-    }
+    private fun provideRetrofit() = Retrofit.Builder()
+        .baseUrl(BASE_URL)
+        .client(httpClient)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
 }
