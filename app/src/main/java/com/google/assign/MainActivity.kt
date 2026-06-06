@@ -6,7 +6,9 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.google.assign.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var navController: NavController
@@ -30,9 +32,3 @@ class MainActivity : AppCompatActivity() {
 
 }
 
-/*
-* DI
-* Mvvm - LiveData - Repo
-* Coroutine - Flow
-* Data binding, View binding
-*/

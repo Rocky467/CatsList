@@ -5,8 +5,9 @@ import androidx.paging.PagingState
 import com.google.assign.model.Cats
 import com.google.assign.utils.Const.PAGE_LIMIT
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class ListPagingSource(private val apiService: ApiService) : PagingSource<Int, Cats>() {
+class ListPagingSource @Inject constructor(private val apiService: ApiService) : PagingSource<Int, Cats>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Cats> {
         return try {

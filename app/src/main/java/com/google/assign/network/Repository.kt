@@ -3,8 +3,9 @@ package com.google.assign.network
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.google.assign.base.BaseRepository
+import javax.inject.Inject
 
-class Repository(private val apiService: ApiService) : BaseRepository() {
+class Repository @Inject constructor(private val apiService: ApiService) : BaseRepository() {
 
     fun getCatsList() = Pager(PagingConfig(pageSize = 10)) {
         ListPagingSource(apiService)

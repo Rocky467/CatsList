@@ -1,18 +1,20 @@
 package com.google.assign.ui.list
 
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.paging.LoadState
 import com.google.assign.R
 import com.google.assign.base.BaseFragment
 import com.google.assign.databinding.ListFragmentBinding
 import com.google.assign.model.Cats
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::inflate),
     ListAdapter.AdapterInterface {
 
     private lateinit var adapter: ListAdapter
-    private val listViewModel: ListViewModel by viewModel()
+    private val listViewModel: ListViewModel by viewModels()
 
     override fun onViewCreated() {
         setupViews()

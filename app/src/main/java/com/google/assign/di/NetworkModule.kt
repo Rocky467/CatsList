@@ -1,22 +1,26 @@
 package com.google.assign.di
 
+import com.google.assign.network.ApiService
+import com.google.assign.network.Repository
 import com.google.assign.utils.Const.API_KEY
 import com.google.assign.utils.Const.AUTH_HEADER
 import com.google.assign.utils.Const.BASE_URL
 import com.google.assign.utils.Const.TIME_OUT
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
+@Module
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
-
-    val networkModule = module {
-        single { provideRetrofit() }
-    }
 
     private val logger = HttpLoggingInterceptor().apply {
         level = HttpLoggingInterceptor.Level.BODY
@@ -39,9 +43,18 @@ object NetworkModule {
         .addNetworkInterceptor(logger)
         .build()
 
-    private fun provideRetrofit() = Retrofit.Builder()
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(httpClient)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+
+    @Singleton
+    @Provides
+    fun provideService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+
 }
