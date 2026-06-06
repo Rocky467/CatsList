@@ -6,10 +6,10 @@ import com.google.assign.base.BaseRepository
 
 class Repository(private val apiService: ApiService) : BaseRepository() {
 
-    fun getUsersList() = Pager(PagingConfig(pageSize = 10)) {
-        UserPagingSource(apiService)
+    fun getCatsList() = Pager(PagingConfig(pageSize = 10)) {
+        ListPagingSource(apiService)
     }
 
-    suspend fun getUser() = safeApiCall { apiService.getUser() }
+    suspend fun getCatById(catId: String) = safeApiCall { apiService.getCatById(catId) }
 
 }

@@ -1,7 +1,10 @@
 package com.google.assign.di
 
+import com.google.assign.utils.Const.API_KEY
+import com.google.assign.utils.Const.AUTH_HEADER
 import com.google.assign.utils.Const.BASE_URL
 import com.google.assign.utils.Const.TIME_OUT
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module
@@ -19,10 +22,20 @@ object NetworkModule {
         level = HttpLoggingInterceptor.Level.BODY
     }
 
+    private val authInterceptor = Interceptor { chain ->
+        chain.proceed(
+            chain.request()
+                .newBuilder()
+                .addHeader(AUTH_HEADER, API_KEY)
+                .build()
+        )
+    }
+
     private val httpClient = OkHttpClient.Builder()
         .connectTimeout(TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(TIME_OUT, TimeUnit.SECONDS)
         .readTimeout(TIME_OUT, TimeUnit.SECONDS)
+        .addInterceptor(authInterceptor)
         .addNetworkInterceptor(logger)
         .build()
 

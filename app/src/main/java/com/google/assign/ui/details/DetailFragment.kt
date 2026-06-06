@@ -12,12 +12,12 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(DetailFragmentBinding
 
     override fun onCreateView() {
         binding.lifecycleOwner = this@DetailFragment
-        binding.user = sharedViewModel.user
+        binding.cat = sharedViewModel.cat
     }
 
     override fun onViewCreated() {
-        viewModel.getUserDetails()
-        viewModel.user.observe(viewLifecycleOwner) {
+        viewModel.getCatById(sharedViewModel.cat.id)
+        viewModel.getCatById.observe(viewLifecycleOwner) {
             val data = fetchData(it, binding.loader)
             log("TAG", data)
         }

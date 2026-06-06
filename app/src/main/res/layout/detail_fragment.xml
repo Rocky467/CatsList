@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.google.assign.model.User" />
+            name="cat"
+            type="com.google.assign.model.Cats" />
 
     </data>
 
@@ -34,14 +34,15 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/image"
-                    loadUrl="@{user.avatar}"
+                    loadUrl="@{cat.url}"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:src="@drawable/default_placeholder"
                     app:civ_border_width="2dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -57,8 +58,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="@{user.firstName}"
-                        tools:text="FirstName" />
+                        android:text="@{cat.height + ``}"
+                        tools:text="Height" />
 
                     <TextView
                         android:id="@+id/textAddress"
@@ -67,8 +68,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
                         android:gravity="center"
-                        android:text="@{user.lastName}"
-                        tools:text="Last Name" />
+                        android:text="@{` X `+cat.width + ``}"
+                        tools:text="Width" />
 
                 </LinearLayout>
 

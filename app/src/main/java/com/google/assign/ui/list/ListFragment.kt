@@ -5,7 +5,7 @@ import androidx.paging.LoadState
 import com.google.assign.R
 import com.google.assign.base.BaseFragment
 import com.google.assign.databinding.ListFragmentBinding
-import com.google.assign.model.User
+import com.google.assign.model.Cats
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::inflate),
@@ -42,13 +42,13 @@ class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::infl
     }
 
     private fun observers() {
-        listViewModel.userList.observe(viewLifecycleOwner) {
+        listViewModel.catsList.observe(viewLifecycleOwner) {
             adapter.submitData(lifecycle, it)
         }
     }
 
-    override fun userClick(user: User) {
-        sharedViewModel.user = user
+    override fun onClick(cat: Cats) {
+        sharedViewModel.cat = cat
         navigateTo(R.id.detailFragment)
     }
 

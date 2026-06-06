@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="user"
-            type="com.google.assign.model.User" />
+            name="cats"
+            type="com.google.assign.model.Cats" />
     </data>
 
 
@@ -29,10 +29,10 @@
 
             <ImageView
                 android:id="@+id/image"
+                loadUrl="@{cats.url}"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:contentDescription="@string/image"
-                loadUrl="@{user.avatar}"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -45,10 +45,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@{user.firstName}"
+                android:text="@{cats.height + ``}"
                 app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Name 1" />
+                tools:text="Height" />
 
             <TextView
                 android:id="@+id/name2"
@@ -57,10 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:fontFamily="monospace"
-                android:text="@{user.lastName}"
+                android:text="@{` X `+cats.width + ``}"
                 app:layout_constraintStart_toEndOf="@+id/name1"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="Name 2" />
+                tools:text="Width" />
 
             <TextView
                 android:id="@+id/tvPos"
@@ -78,21 +78,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:text="@{user.phoneNumber}"
+                android:text="@{cats.id}"
                 app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toBottomOf="@+id/name1"
-                tools:text="Phone No" />
-
-            <TextView
-                android:id="@+id/address"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@{user.address.city}"
-                app:layout_constraintStart_toEndOf="@+id/image"
-                app:layout_constraintTop_toBottomOf="@+id/phoneNo"
-                tools:text="Address" />
+                tools:text="ID" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

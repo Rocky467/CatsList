@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.assign.databinding.ItemLayoutBinding
-import com.google.assign.model.User
+import com.google.assign.model.Cats
 import com.google.assign.utils.Util.diffUtil
 
 class ListAdapter(private val adapterInterface: AdapterInterface) :
-    PagingDataAdapter<User, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
+    PagingDataAdapter<Cats, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,19 +24,19 @@ class ListAdapter(private val adapterInterface: AdapterInterface) :
         private val binding: ItemLayoutBinding,
         private val adapterInterface: AdapterInterface
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: User) {
+        fun bind(item: Cats) {
             binding.apply {
-                user = item
+                cats = item
                 tvPos.text = (absoluteAdapterPosition.plus(1)).toString()
                 itemView.setOnClickListener {
-                    adapterInterface.userClick(item)
+                    adapterInterface.onClick(item)
                 }
             }
         }
     }
 
     interface AdapterInterface {
-        fun userClick(user: User)
+        fun onClick(cat: Cats)
     }
 }
 

@@ -46,6 +46,7 @@ object Util {
         .placeholder(R.drawable.default_placeholder)
         .centerCrop()
         .diskCacheStrategy(DiskCacheStrategy.ALL)
+        .dontAnimate()
         .into(this)
 
     fun alertDialog(
