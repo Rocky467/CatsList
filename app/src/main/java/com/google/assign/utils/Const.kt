@@ -6,4 +6,3 @@ object Const {
     const val PAGE_LIMIT = 20
     const val TIME_OUT = 60L
 }
-
