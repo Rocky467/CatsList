@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import com.google.assign.base.BaseFragment
 import com.google.assign.databinding.DetailFragmentBinding
 import com.google.assign.ui.list.ListViewModel
-import com.google.assign.utils.Util.log
+import com.google.assign.utils.Util.loadData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -13,15 +13,14 @@ class DetailFragment : BaseFragment<DetailFragmentBinding>(DetailFragmentBinding
     private val viewModel: ListViewModel by viewModels()
 
     override fun onCreateView() {
-        binding.lifecycleOwner = this@DetailFragment
-        binding.cat = sharedViewModel.cat
+        binding.lifecycleOwner = viewLifecycleOwner
     }
 
     override fun onViewCreated() {
         viewModel.getCatById(sharedViewModel.cat.id)
         viewModel.getCatById.observe(viewLifecycleOwner) {
-            val data = fetchData(it, binding.loader)
-            log("TAG", data)
+            val data = loadData(it, binding.loader)
+            binding.cat = data
         }
     }
 

@@ -8,7 +8,9 @@ import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.afollestad.materialdialogs.LayoutMode
@@ -41,7 +43,7 @@ object Util {
 
     @JvmStatic
     @BindingAdapter("loadUrl")
-    fun ImageView.loadUrl(url: String) = Glide.with(context)
+    fun ImageView.loadUrl(url: String?) = Glide.with(context)
         .load(url)
         .placeholder(R.drawable.default_placeholder)
         .centerCrop()
@@ -82,5 +84,25 @@ object Util {
         @SuppressLint("DiffUtilEquals")
         override fun areContentsTheSame(oldItem: T, newItem: T): Boolean =
             oldItem == newItem
+    }
+
+
+    fun <T> loadData(it: Resource<T>, progressBar: ProgressBar): T? {
+        progressBar.isVisible = false
+        when (it) {
+            is Resource.Loading -> {
+                progressBar.isVisible = true
+            }
+
+            is Resource.Success -> {
+                return it.data
+            }
+
+            is Resource.Error -> {
+                progressBar.showError(it.error.toString())
+            }
+        }
+
+        return null
     }
 }

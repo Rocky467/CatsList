@@ -1,11 +1,8 @@
 package com.google.assign.base
 
-import com.google.assign.model.ErrorResponse
 import com.google.assign.utils.Resource
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ResponseBody
 import okio.IOException
 import retrofit2.HttpException
 import retrofit2.Response
@@ -20,8 +17,7 @@ abstract class BaseRepository {
                 if (response.isSuccessful) {
                     Resource.Success(response.body()!!)
                 } else {
-                    val errorResponse = getErrorResponse(response.errorBody()!!)
-                    Resource.Error(errorResponse?.error ?: "Something went wrong")
+                    Resource.Error(response.errorBody()!!.string())
                 }
             } catch (e: HttpException) {
                 Resource.Error(e.message ?: "Http, Something went wrong")
@@ -32,9 +28,4 @@ abstract class BaseRepository {
             }
         }
     }
-
-    private fun getErrorResponse(response: ResponseBody): ErrorResponse? {
-        return Gson().fromJson(response.string(), ErrorResponse::class.java)
-    }
-
 }

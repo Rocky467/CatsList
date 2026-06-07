@@ -9,18 +9,18 @@ import com.google.assign.model.Cats
 import com.google.assign.utils.Util.diffUtil
 
 class ListAdapter(private val adapterInterface: AdapterInterface) :
-    PagingDataAdapter<Cats, ListAdapter.UserViewHolder>(diffUtil { old, new -> old.id == new.id }) {
+    PagingDataAdapter<Cats, ListAdapter.ItemViewHolder>(diffUtil { old, new -> old.id == new.id }) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         val binding = ItemLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return UserViewHolder(binding, adapterInterface)
+        return ItemViewHolder(binding, adapterInterface)
     }
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         getItem(position)?.let { holder.bind(it) }
     }
 
-    class UserViewHolder(
+    class ItemViewHolder(
         private val binding: ItemLayoutBinding,
         private val adapterInterface: AdapterInterface
     ) : RecyclerView.ViewHolder(binding.root) {
@@ -29,14 +29,14 @@ class ListAdapter(private val adapterInterface: AdapterInterface) :
                 cats = item
                 tvPos.text = (absoluteAdapterPosition.plus(1)).toString()
                 itemView.setOnClickListener {
-                    adapterInterface.onClick(item)
+                    adapterInterface.itemClick(item)
                 }
             }
         }
     }
 
     interface AdapterInterface {
-        fun onClick(cat: Cats)
+        fun itemClick(cat: Cats)
     }
 }
 

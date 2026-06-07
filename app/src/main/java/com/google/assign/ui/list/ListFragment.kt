@@ -49,7 +49,7 @@ class ListFragment : BaseFragment<ListFragmentBinding>(ListFragmentBinding::infl
         }
     }
 
-    override fun onClick(cat: Cats) {
+    override fun itemClick(cat: Cats) {
         sharedViewModel.cat = cat
         navigateTo(R.id.detailFragment)
     }
