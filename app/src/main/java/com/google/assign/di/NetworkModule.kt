@@ -1,11 +1,10 @@
 package com.google.assign.di
 
 import com.google.assign.network.ApiService
-import com.google.assign.network.Repository
-import com.google.assign.utils.Const.API_KEY
 import com.google.assign.utils.Const.AUTH_HEADER
 import com.google.assign.utils.Const.BASE_URL
 import com.google.assign.utils.Const.TIME_OUT
+import com.google.assign.utils.Keys.API_KEY
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
